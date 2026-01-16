@@ -5,11 +5,9 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Gado\\AirBridgePhpSdk\\": "src/"
-        },
-        "files": [
-            "src/Helpers/global.php"
-        ]
+            "Gado\\AirBridgePhpSdk\\": "src/",
+            "Gado\\AirBridgePhpSdk\\Tests": "tests/"
+        }
     },
     "authors": [
         {

@@ -6,6 +6,7 @@ namespace Gado\AirBridgePhpSdk\Tests\Unit;
 
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLink;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\CreateTrackingLinkRequest;
+use Gado\AirBridgePhpSdk\TrackingLink\Requests\GetSpecificTrackingLinkRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\TrackingLinkApi;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -88,5 +89,54 @@ final class TrackingLinkApiTest extends TestCase
         $this->trackingLinkApi->withMockClient($mockClient);
         $this->trackingLinkApi->createTrackingLink($trackingLink)->body();
         $mockClient->assertSent(CreateTrackingLinkRequest::class);
+    }
+    
+    #[Test()]
+    public function testGetSpecificTrackingLinkByIdIsReturningATrackingLink(): void
+    {
+        $trackingLinkApiMock = $this->createMock(TrackingLinkApi::class);
+        $trackingLink = new TrackingLink();
+        $trackingLinkApiMock->expects($this->once())
+            ->method('getSpecificTrackingLink');
+        
+        $trackingLinkApiMock->getSpecificTrackingLink(123);
+    }
+    
+    #[Test()]
+    public function testGetSpecificTrackingLinkByIdReturnsATrackingLink(): void
+    {
+        $mockClient = new MockClient([
+            GetSpecificTrackingLinkRequest::class => MockResponse::make(
+                body: [
+                    'data' => [
+                        "company" => null,
+                        "shortId" => "ri4lnp",
+                        "shortUrl" => "https://go.ab180.co/ri4lnp",
+                        "createdAt" => "2023-01-01T00:00:00+09:00",
+                        "channelName" => "my-channel",
+                        "channelType" => "custom",
+                        "deeplinkUrl" => null,
+                        "deeplinkOption" => [
+                            "showAlertForInitialDeeplinkingIssue" => false
+                        ],
+                        "fallbackPaths" => [
+                            "ios" => "itunes-appstore",
+                            "option" => [
+                                "iosCustomProductPageId" => null
+                            ],
+                            "android" => "google-play",
+                            "desktop" => "https://airbridge.io"
+                        ],
+                    ],
+                ],
+                status: 200,
+                headers: ['Content-Type' => 'application/json']
+            )
+        ]);
+
+
+        $this->trackingLinkApi->withMockClient($mockClient);
+        $this->trackingLinkApi->getSpecificTrackingLink(10000)->body();
+        $mockClient->assertSent(GetSpecificTrackingLinkRequest::class);
     }
 }

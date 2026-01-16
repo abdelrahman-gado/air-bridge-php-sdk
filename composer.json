@@ -5,14 +5,21 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Gado\\AirBridgePhpSdk\\": "src/"
+            "Gado\\AirBridgePhpSdk\\": "src/",
+            "Gado\\AirBridgePhpSdk\\Tests": "tests/"
         }
     },
     "authors": [
         {
             "name": "abdelrahman gado",
-            "email": "gadoua50@gmail.com"
+            "email": "abdelrahman.magdy.gado@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=8.4",
+        "saloonphp/saloon": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    }
 }

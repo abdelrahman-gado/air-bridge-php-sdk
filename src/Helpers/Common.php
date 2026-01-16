@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-if (!function_exists('config')) {
-    function config(?string $configName = null): mixed 
+namespace Gado\AirBridgePhpSdk\Helpers;
+
+class Common
+{
+    public const string BASE_CONFIGURATION_PATH = __DIR__ . '/../configuration.php';
+
+    public static function config(?string $configName = null): mixed
     {
-        $configuration = require_once __DIR__ . '/../configuration.php';
+        $configuration = require self::BASE_CONFIGURATION_PATH;
         if ($configName === null) {
             return null;
         }
@@ -20,4 +25,3 @@ if (!function_exists('config')) {
         }, $configuration);
     }
 }
-

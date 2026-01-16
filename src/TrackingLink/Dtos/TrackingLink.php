@@ -10,20 +10,21 @@ use InvalidArgumentException;
 
 class TrackingLink
 {
-    public function __construct(
-        public ?string $channel = null,
-        public ?string $deepLinkUrl = null,
-        public ?string $androidFallbackPath = null,
-        public ?string $iosFallbackPath = null,
-        public ?string $desktopFallbackPath = null,
-        public bool $alertForInitialDeepLinkingIssue = false,
-        public ?string $customShortId = null,
-        public ?string $ogTagTitle = null,
-        public ?string $ogTagDescription = null,
-        public ?string $ogTagImageUrl = null,
-        public ?OgTagWebsiteCrawlEnum $ogTagWebsiteCrawl = null,
-        public ?bool $ogTagUseDefault = null,
-    ) {
+    private ?string $channel = null;
+    private ?string $deepLinkUrl = null;
+    private ?string $androidFallbackPath = null;
+    private ?string $iosFallbackPath = null;
+    private ?string $desktopFallbackPath = null;
+    private bool $alertForInitialDeepLinkingIssue = false;
+    private ?string $customShortId = null;
+    private ?string $ogTagTitle = null;
+    private ?string $ogTagDescription = null;
+    private ?string $ogTagImageUrl = null;
+    private ?OgTagWebsiteCrawlEnum $ogTagWebsiteCrawl = null;
+    private ?bool $ogTagUseDefault = null;
+
+    public function __construct()
+    {
     }
 
     public function channel(string $channel): static
@@ -125,6 +126,6 @@ class TrackingLink
                 'useDefault' => $this->ogTagUseDefault,
             ], static fn($value) => $value !== null),
 
-        ], static fn($value) => $value !== null);
+        ], static fn($value) => $value !== null && $value !== []);
     }
 }

@@ -8,8 +8,10 @@ use Gado\AirBridgePhpSdk\AirBridgeConnector;
 use Gado\AirBridgePhpSdk\Enums\LanguageEnum;
 use Gado\AirBridgePhpSdk\Helpers\Common;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLink;
+use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\CreateTrackingLinkRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\GetSpecificTrackingLinkRequest;
+use Gado\AirBridgePhpSdk\TrackingLink\Requests\ListTrackingLinksRequest;
 use Saloon\Http\Response;
 
 class TrackingLinkApi extends AirBridgeConnector
@@ -34,5 +36,10 @@ class TrackingLinkApi extends AirBridgeConnector
     public function getSpecificTrackingLink(int $id): Response
     {
         return $this->send(new GetSpecificTrackingLinkRequest($id));
+    }
+    
+    public function listTrackingLinks(TrackingLinkListFilter $filters): Response
+    {
+        return $this->send(new ListTrackingLinksRequest($filters));
     }
 }

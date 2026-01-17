@@ -23,10 +23,6 @@ class TrackingLink
     private ?OgTagWebsiteCrawlEnum $ogTagWebsiteCrawl = null;
     private ?bool $ogTagUseDefault = null;
 
-    public function __construct()
-    {
-    }
-
     public function channel(string $channel): static
     {
         $this->channel = $channel;

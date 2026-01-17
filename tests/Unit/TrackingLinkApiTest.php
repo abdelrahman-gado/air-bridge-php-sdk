@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Gado\AirBridgePhpSdk\Tests\Unit;
 
+use DateTimeImmutable;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLink;
+use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\CreateTrackingLinkRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\GetSpecificTrackingLinkRequest;
+use Gado\AirBridgePhpSdk\TrackingLink\Requests\ListTrackingLinksRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\TrackingLinkApi;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 
+#[CoversClass(TrackingLinkApi::class)]
 final class TrackingLinkApiTest extends TestCase
 {
     private TrackingLinkApi $trackingLinkApi;
@@ -47,7 +52,7 @@ final class TrackingLinkApiTest extends TestCase
     {
         $this->assertInstanceOf(TokenAuthenticator::class, $this->trackingLinkApi->defaultAuth());
     }
-    
+
     #[Test()]
     public function testCreateTrackingLinkIsCreatingATrackingLink(): void
     {
@@ -58,7 +63,7 @@ final class TrackingLinkApiTest extends TestCase
             ->with($trackingLink);
         $trackingLinkApiMock->createTrackingLink($trackingLink);
     }
-    
+
 
     #[Test()]
     public function testCreateTrackingLinkReturnsATrackingLink(): void
@@ -80,7 +85,7 @@ final class TrackingLinkApiTest extends TestCase
                 headers: ['Content-Type' => 'application/json']
             )
         ]);
-        
+
         $trackingLink = new TrackingLink()
             ->channel('custom')
             ->deepLinkUrl('https://example.com')
@@ -90,7 +95,7 @@ final class TrackingLinkApiTest extends TestCase
         $this->trackingLinkApi->createTrackingLink($trackingLink)->body();
         $mockClient->assertSent(CreateTrackingLinkRequest::class);
     }
-    
+
     #[Test()]
     public function testGetSpecificTrackingLinkByIdIsReturningATrackingLink(): void
     {
@@ -98,10 +103,10 @@ final class TrackingLinkApiTest extends TestCase
         $trackingLink = new TrackingLink();
         $trackingLinkApiMock->expects($this->once())
             ->method('getSpecificTrackingLink');
-        
+
         $trackingLinkApiMock->getSpecificTrackingLink(123);
     }
-    
+
     #[Test()]
     public function testGetSpecificTrackingLinkByIdReturnsATrackingLink(): void
     {
@@ -138,5 +143,48 @@ final class TrackingLinkApiTest extends TestCase
         $this->trackingLinkApi->withMockClient($mockClient);
         $this->trackingLinkApi->getSpecificTrackingLink(10000)->body();
         $mockClient->assertSent(GetSpecificTrackingLinkRequest::class);
+    }
+
+    #[Test()]
+    public function testListTrackingLinksCallingListTrackingLinksMethod(): void
+    {
+        $filters = new TrackingLinkListFilter()
+            ->from(new DateTimeImmutable())
+            ->to(new DateTimeImmutable());
+
+        $trackingLinkApiMock = $this->createMock(TrackingLinkApi::class);
+        $trackingLinkApiMock->expects($this->once())
+            ->method('listTrackingLinks')
+            ->with($filters);
+
+        $trackingLinkApiMock->listTrackingLinks($filters);
+    }
+
+    public function testListTrackingLinksReturnAListOfTrackingLinks(): void
+    {
+        $mockClient = new MockClient([
+            ListTrackingLinksRequest::class => MockResponse::make(
+                body: [
+                    'data' => [
+                        "totalCount" => 1,
+                        "trackingLinks" => [
+                            [
+                                "id" => "10001",
+                            ]
+                        ]
+                    ],
+                ],
+                status: 200,
+                headers: ['Content-Type' => 'application/json']
+            )
+        ]);
+
+        $filter = new TrackingLinkListFilter()
+                ->from(new DateTimeImmutable())
+                ->to(new DateTimeImmutable());
+
+        $this->trackingLinkApi->withMockClient($mockClient);
+        $this->trackingLinkApi->listTrackingLinks($filter)->body();
+        $mockClient->assertSent(ListTrackingLinksRequest::class);
     }
 }

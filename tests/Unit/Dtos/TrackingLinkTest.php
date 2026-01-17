@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Gado\AirBridgePhpSdk\Tests\Unit;
+namespace Gado\AirBridgePhpSdk\Tests\Unit\Dtos;
 
 use Gado\AirBridgePhpSdk\Enums\OgTagWebsiteCrawlEnum;
 use Gado\AirBridgePhpSdk\Enums\PlatformEnum;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLink;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypeError;
 
+#[CoversClass(TrackingLink::class)]
 final class TrackingLinkTest extends TestCase
 {
     private TrackingLink $trackingLink;

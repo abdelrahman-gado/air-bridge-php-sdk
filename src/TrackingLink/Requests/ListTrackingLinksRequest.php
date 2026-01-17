@@ -4,23 +4,29 @@ declare(strict_types=1);
 
 namespace Gado\AirBridgePhpSdk\TrackingLink\Requests;
 
+use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
-final class GetSpecificTrackingLinkRequest extends Request implements HasBody
+final class ListTrackingLinksRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
     protected Method $method = Method::GET;
 
-    public function __construct(private int $trackingLinkId)
+    public function __construct(private TrackingLinkListFilter $filter)
     {
     }
 
     public function resolveEndpoint(): string
     {
-        return "/{$this->trackingLinkId}";
+        return '';
+    }
+
+    public function defaultQuery(): array
+    {
+        return $this->filter->getQueryParams();
     }
 }

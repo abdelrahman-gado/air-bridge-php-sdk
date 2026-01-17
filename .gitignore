@@ -5,3 +5,6 @@ phpcs.xml
 phpunit.xml
 .phpunit.result.cache
 .vscode
+.qodo
+cov
+.phpunit.cache

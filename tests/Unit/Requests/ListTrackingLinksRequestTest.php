@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gado\AirBridgePhpSdk\Unit\Requests;
+namespace Gado\AirBridgePhpSdk\Tests\Unit\Requests;
 
 use DateTime;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;

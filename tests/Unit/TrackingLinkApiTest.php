@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gado\AirBridgePhpSdk\Tests\Unit;
 
-use DateTime;
+use DateTimeImmutable;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLink;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\CreateTrackingLinkRequest;
@@ -149,8 +149,8 @@ final class TrackingLinkApiTest extends TestCase
     public function testListTrackingLinksCallingListTrackingLinksMethod(): void
     {
         $filters = new TrackingLinkListFilter()
-            ->from(new DateTime())
-            ->to(new DateTime());
+            ->from(new DateTimeImmutable())
+            ->to(new DateTimeImmutable());
 
         $trackingLinkApiMock = $this->createMock(TrackingLinkApi::class);
         $trackingLinkApiMock->expects($this->once())
@@ -180,8 +180,8 @@ final class TrackingLinkApiTest extends TestCase
         ]);
 
         $filter = new TrackingLinkListFilter()
-                ->from(new DateTime())
-                ->to(new DateTime());
+                ->from(new DateTimeImmutable())
+                ->to(new DateTimeImmutable());
 
         $this->trackingLinkApi->withMockClient($mockClient);
         $this->trackingLinkApi->listTrackingLinks($filter)->body();

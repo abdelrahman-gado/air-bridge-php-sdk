@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gado\AirBridgePhpSdk\Tests\Unit\Requests;
 
-use DateTime;
+use DateTimeImmutable;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\ListTrackingLinksRequest;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,8 +18,8 @@ final class ListTrackingLinksRequestTest extends TestCase
     public function testResolveEndpointReturnEmptyString(): void
     {
         $filter = new TrackingLinkListFilter()
-            ->from(new DateTime())
-            ->to(new DateTime());
+            ->from(new DateTimeImmutable())
+            ->to(new DateTimeImmutable());
 
         $listTrackingLinksRequest = new ListTrackingLinksRequest($filter);
         $this->assertSame('', $listTrackingLinksRequest->resolveEndpoint());
@@ -29,8 +29,8 @@ final class ListTrackingLinksRequestTest extends TestCase
     public function testDefaultQueryReturnArray(): void
     {
         $filter = new TrackingLinkListFilter()
-            ->from(new DateTime('2024-01-01'))
-            ->to(new DateTime('2024-01-31'));
+            ->from(new DateTimeImmutable('2024-01-01'))
+            ->to(new DateTimeImmutable('2024-01-31'));
        
         $listTrackingLinksRequest = new ListTrackingLinksRequest($filter);
         $queryParams = $listTrackingLinksRequest->defaultQuery();

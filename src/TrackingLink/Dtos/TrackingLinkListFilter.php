@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Gado\AirBridgePhpSdk\TrackingLink\Dtos;
 
 use BadMethodCallException;
-use DateTime;
+use DateTimeImmutable;
 use Gado\AirBridgePhpSdk\Enums\SortKeyEnum;
 use Gado\AirBridgePhpSdk\Enums\SortTypeEnum;
 use InvalidArgumentException;
 
 class TrackingLinkListFilter
 {
-    private ?DateTime $from = null;
-    private ?DateTime $to = null;
+    private ?DateTimeImmutable $from = null;
+    private ?DateTimeImmutable $to = null;
     private ?int $skip = null;
     private ?int $size = null;
     private ?string $keyword = null;
@@ -21,13 +21,13 @@ class TrackingLinkListFilter
     private ?SortKeyEnum $sortKey = null;
     private ?SortTypeEnum $sortType = null;
 
-    public function from(DateTime $from): static
+    public function from(DateTimeImmutable $from): static
     {
         $this->from = $from;
         return $this;
     }
 
-    public function to(DateTime $to): static
+    public function to(DateTimeImmutable $to): static
     {
         $this->to = $to;
         return $this;

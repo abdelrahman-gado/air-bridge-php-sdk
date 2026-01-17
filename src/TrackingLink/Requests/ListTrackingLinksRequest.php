@@ -8,7 +8,7 @@ use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-final class ListTrackingLinksRequest extends Request
+class ListTrackingLinksRequest extends Request
 {
     protected Method $method = Method::GET;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gado\AirBridgePhpSdk\Tests\Unit\Dtos;
 
 use BadMethodCallException;
-use DateTime;
+use DateTimeImmutable;
 use Gado\AirBridgePhpSdk\Enums\SortKeyEnum;
 use Gado\AirBridgePhpSdk\Enums\SortTypeEnum;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
@@ -27,8 +27,8 @@ final class TrackingLinkListFilterTest extends TestCase
     #[Test()]
     public function testFluentInterface(): void
     {
-        $from = new DateTime();
-        $to = new DateTime();
+        $from = new DateTimeImmutable();
+        $to = new DateTimeImmutable();
 
         $result = $this->filter
             ->from($from)
@@ -62,7 +62,7 @@ final class TrackingLinkListFilterTest extends TestCase
         $this->expectException(\TypeError::class);
         $this->filter->from(function () {});
 
-        $result = $this->filter->from(new DateTime());
+        $result = $this->filter->from(new DateTimeImmutable());
         $this->assertSame($result, $this->filter);
     }
 
@@ -87,7 +87,7 @@ final class TrackingLinkListFilterTest extends TestCase
         $this->expectException(\TypeError::class);
         $this->filter->to(function () {});
 
-        $result = $this->filter->to(new DateTime());
+        $result = $this->filter->to(new DateTimeImmutable());
         $this->assertSame($result, $this->filter);
     }
 
@@ -238,8 +238,8 @@ final class TrackingLinkListFilterTest extends TestCase
     public function testGetQueryParamsMethodReturnArray(): void
     {
         $paramsArray = $this->filter
-            ->from(new DateTime('2024-01-01'))
-            ->to(new DateTime('2024-01-31'))
+            ->from(new DateTimeImmutable('2024-01-01'))
+            ->to(new DateTimeImmutable('2024-01-31'))
             ->skip(10)
             ->size(50)
             ->keyword('testKeyword')
@@ -270,12 +270,12 @@ final class TrackingLinkListFilterTest extends TestCase
     {
         $this->expectException(BadMethodCallException::class);
         $this->filter
-            ->to(new DateTime('2024-01-31'))
+            ->to(new DateTimeImmutable('2024-01-31'))
             ->getQueryParams();
 
         $this->expectException(BadMethodCallException::class);
         $this->filter
-            ->from(new DateTime('2024-01-01'))
+            ->from(new DateTimeImmutable('2024-01-01'))
             ->getQueryParams();
         
         $this->expectException(BadMethodCallException::class);
@@ -287,8 +287,8 @@ final class TrackingLinkListFilterTest extends TestCase
     public function testGetQueryParamsWithNullableData(): void
     {
         $paramsArray = $this->filter
-            ->from(new DateTime('2024-01-01'))
-            ->to(new DateTime('2024-01-31'))
+            ->from(new DateTimeImmutable('2024-01-01'))
+            ->to(new DateTimeImmutable('2024-01-31'))
             ->getQueryParams();
 
         $this->assertIsArray($paramsArray);
@@ -306,8 +306,8 @@ final class TrackingLinkListFilterTest extends TestCase
     {
         $this->expectException(BadMethodCallException::class);
         $this->filter
-            ->from(new DateTime('2024-02-01'))
-            ->to(new DateTime('2024-01-31'))
+            ->from(new DateTimeImmutable('2024-02-01'))
+            ->to(new DateTimeImmutable('2024-01-31'))
             ->getQueryParams();
     }
 }

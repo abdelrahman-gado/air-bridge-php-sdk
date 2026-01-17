@@ -35,12 +35,20 @@ class TrackingLinkListFilter
 
     public function skip(int $skip): static
     {
+        if ($skip < 0) {
+            $skip = 0;
+        }
+
         $this->skip = $skip;
         return $this;
     }
 
     public function size(int $size): static
     {
+        if ($size < 1) {
+            $size = 1;
+        }
+
         if ($size >= 500) {
             throw new InvalidArgumentException('Size must be less than 500.');
         }

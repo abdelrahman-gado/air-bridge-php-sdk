@@ -300,4 +300,14 @@ final class TrackingLinkListFilterTest extends TestCase
             $this->filter->getQueryParams()
         );
     }
+    
+    #[Test()]
+    public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenFromIsLaterThanTo(): void
+    {
+        $this->expectException(BadMethodCallException::class);
+        $this->filter
+            ->from(new DateTime('2024-02-01'))
+            ->to(new DateTime('2024-01-31'))
+            ->getQueryParams();
+    }
 }

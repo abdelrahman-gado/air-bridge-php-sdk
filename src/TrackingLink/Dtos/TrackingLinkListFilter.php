@@ -78,6 +78,10 @@ class TrackingLinkListFilter
         if (!$this->from || !$this->to) {
             throw new BadMethodCallException('Both "from" and "to" dates must be set.');
         }
+        
+        if ($this->from > $this->to) {
+            throw new BadMethodCallException('From date must be earlier than to date.');
+        }
 
         return array_filter([
             'from' => $this->from->format('Y-m-d'),

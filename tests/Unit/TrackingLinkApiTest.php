@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Gado\AirBridgePhpSdk\Tests\Unit;
 
 use DateTimeImmutable;
+use Gado\AirBridgePhpSdk\Enums\IdTypeEnum;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLink;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkListFilter;
+use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkUpdatePayload;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\CreateTrackingLinkRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\GetSpecificTrackingLinkRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\Requests\ListTrackingLinksRequest;
+use Gado\AirBridgePhpSdk\TrackingLink\Requests\UpdateTrackingLinkRequest;
 use Gado\AirBridgePhpSdk\TrackingLink\TrackingLinkApi;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -160,6 +163,7 @@ final class TrackingLinkApiTest extends TestCase
         $trackingLinkApiMock->listTrackingLinks($filters);
     }
 
+    #[Test]
     public function testListTrackingLinksReturnAListOfTrackingLinks(): void
     {
         $mockClient = new MockClient([
@@ -186,5 +190,44 @@ final class TrackingLinkApiTest extends TestCase
         $this->trackingLinkApi->withMockClient($mockClient);
         $this->trackingLinkApi->listTrackingLinks($filter)->body();
         $mockClient->assertSent(ListTrackingLinksRequest::class);
+    }
+    
+    #[Test]
+    public function testUpdateTrackingLinkCallingUpdateTrackingLinkMethod(): void
+    {
+        $updatePayloadDto = new TrackingLinkUpdatePayload()
+            ->idType(IdTypeEnum::ID)
+            ->title('title')
+            ->description('description')
+            ->imageUrl('https://example.com/image.png');
+        
+        $trackingLinkApiMock = $this->createMock(TrackingLinkApi::class);
+        $trackingLinkApiMock->expects($this->once())
+            ->method('updateTrackingLink')
+            ->with('235', $updatePayloadDto);
+
+        $trackingLinkApiMock->updateTrackingLink('235', $updatePayloadDto);
+    }
+    
+    #[Test]
+    public function testUpdateTrackingLinkReturnEmptyResponse(): void
+    {
+        $mockClient = new MockClient([
+            UpdateTrackingLinkRequest::class => MockResponse::make(
+               body: [],
+               status: 200,
+               headers: ['Content-Type' => 'application/json'], 
+            )
+        ]);
+        
+        $updatePayloadDto = new TrackingLinkUpdatePayload()
+            ->idType(IdTypeEnum::ID)
+            ->title('title')
+            ->description('description')
+            ->imageUrl('https://example.com/image.png');
+
+        $this->trackingLinkApi->withMockClient($mockClient);
+        $this->trackingLinkApi->updateTrackingLink('235', $updatePayloadDto)->body();
+        $mockClient->assertSent(UpdateTrackingLinkRequest::class);
     }
 }

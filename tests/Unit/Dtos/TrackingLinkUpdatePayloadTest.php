@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gado\AirBridgePhpSdk\Tests;
+namespace Gado\AirBridgePhpSdk\Tests\Unit\Dtos;
 
 use BadMethodCallException;
 use Gado\AirBridgePhpSdk\Enums\IdTypeEnum;

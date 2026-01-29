@@ -266,18 +266,26 @@ final class TrackingLinkListFilterTest extends TestCase
 
 
     #[Test()]
-    public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenNoFormOrNoToSet(): void
+    public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenNoFormOrNoFromSet(): void
     {
         $this->expectException(BadMethodCallException::class);
         $this->filter
             ->to(new DateTimeImmutable('2024-01-31'))
             ->getQueryParams();
-
+    }
+    
+    #[Test()]
+    public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenNoToSet(): void
+    {
         $this->expectException(BadMethodCallException::class);
         $this->filter
             ->from(new DateTimeImmutable('2024-01-01'))
             ->getQueryParams();
-
+    }
+    
+    #[Test()]
+    public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenNoDatesSet(): void
+    { 
         $this->expectException(BadMethodCallException::class);
         $this->filter
             ->getQueryParams();

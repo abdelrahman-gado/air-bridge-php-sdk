@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gado\AirBridgePhpSdk\Tests\Requests;
+namespace Gado\AirBridgePhpSdk\Tests\Unit\Requests;
 
 use Gado\AirBridgePhpSdk\Enums\IdTypeEnum;
 use Gado\AirBridgePhpSdk\TrackingLink\Dtos\TrackingLinkUpdatePayload;

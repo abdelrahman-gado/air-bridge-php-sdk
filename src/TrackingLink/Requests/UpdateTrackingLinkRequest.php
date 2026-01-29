@@ -24,7 +24,7 @@ class UpdateTrackingLinkRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/' . $this->id . '/og-tag';
+        return '/' . rawurldecode($this->id) . '/og-tag';
     }
 
     public function defaultBody(): array

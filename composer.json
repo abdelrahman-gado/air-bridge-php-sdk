@@ -6,7 +6,7 @@
     "autoload": {
         "psr-4": {
             "Gado\\AirBridgePhpSdk\\": "src/",
-            "Gado\\AirBridgePhpSdk\\Tests": "tests/"
+            "Gado\\AirBridgePhpSdk\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -15,6 +15,9 @@
             "email": "abdelrahman.magdy.gado@gmail.com"
         }
     ],
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests/Unit --testdox --colors"
+    },
     "require": {
         "php": ">=8.4",
         "saloonphp/saloon": "^3.0"

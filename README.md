@@ -1,8 +1,7 @@
 # Air Bridge PHP SDK
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Quality Score][ico-code-quality]][link-code-quality]
+[![Software License][ico-license]](LICENSE)
 [![Total Downloads][ico-downloads]][link-downloads]
 
 A Simple PHP SDK for integrating with the Air Bridge attribution and deep linking platform. This package provides an easy-to-use interface for managing tracking links and attribution data through the Air Bridge API.

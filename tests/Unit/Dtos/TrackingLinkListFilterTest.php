@@ -263,7 +263,7 @@ final class TrackingLinkListFilterTest extends TestCase
             $this->filter->getQueryParams()
         );
     }
-    
+
 
     #[Test()]
     public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenNoFormOrNoToSet(): void
@@ -277,12 +277,12 @@ final class TrackingLinkListFilterTest extends TestCase
         $this->filter
             ->from(new DateTimeImmutable('2024-01-01'))
             ->getQueryParams();
-        
+
         $this->expectException(BadMethodCallException::class);
         $this->filter
             ->getQueryParams();
     }
-    
+
     #[Test()]
     public function testGetQueryParamsWithNullableData(): void
     {
@@ -300,7 +300,7 @@ final class TrackingLinkListFilterTest extends TestCase
             $this->filter->getQueryParams()
         );
     }
-    
+
     #[Test()]
     public function testGetQueryParamsMethodThrowsBadMethodCallExceptionWhenFromIsLaterThanTo(): void
     {
@@ -309,5 +309,70 @@ final class TrackingLinkListFilterTest extends TestCase
             ->from(new DateTimeImmutable('2024-02-01'))
             ->to(new DateTimeImmutable('2024-01-31'))
             ->getQueryParams();
+    }
+
+    #[Test()]
+    public function testSkipMethodReturnZeroIfValueLessThanZero(): void
+    {
+        $this->filter->from(new DateTimeImmutable('2024-01-01'))
+            ->to(new DateTimeImmutable('2024-01-31'))
+            ->skip(-10)
+            ->size(50)
+            ->keyword('testKeyword')
+            ->channelName('testChannel')
+            ->sortKey(SortKeyEnum::CREATED_AT)
+            ->sortType(SortTypeEnum::ASC)
+            ->getQueryParams();
+        
+        
+        $this->assertSame(
+            [
+                'from' => '2024-01-01',
+                'to' => '2024-01-31',
+                'skip' => 0,
+                'size' => 50,
+                'keyword' => 'testKeyword',
+                'channelName' => 'testChannel',
+                'sortKey' => 'createdAt',
+                'sortType' => 'ASC',
+            ],
+            $this->filter->getQueryParams()
+        );
+    }
+    
+    #[Test()]
+    public function testSizeMethodReturnOneIfValueLessThanOne(): void
+    {
+        $this->filter->from(new DateTimeImmutable('2024-01-01'))
+            ->to(new DateTimeImmutable('2024-01-31'))
+            ->skip(-10)
+            ->size(0)
+            ->keyword('testKeyword')
+            ->channelName('testChannel')
+            ->sortKey(SortKeyEnum::CREATED_AT)
+            ->sortType(SortTypeEnum::ASC)
+            ->getQueryParams();
+        
+        
+        $this->assertSame(
+            [
+                'from' => '2024-01-01',
+                'to' => '2024-01-31',
+                'skip' => 0,
+                'size' => 1,
+                'keyword' => 'testKeyword',
+                'channelName' => 'testChannel',
+                'sortKey' => 'createdAt',
+                'sortType' => 'ASC',
+            ],
+            $this->filter->getQueryParams()
+        );
+    }
+    
+    #[Test()]
+    public function testSizeMethodThrowsInvalidArgumentExceptionWhenValueGreaterThan500(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->filter->size(501);
     }
 }

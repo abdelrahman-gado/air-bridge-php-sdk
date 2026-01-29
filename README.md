@@ -62,8 +62,8 @@ use Gado\AirBridgePhpSdk\Dto\TrackingLinkListFilter;
 
 $trackingLinkApi = new TrackingLinkApi('your_bearer_token');
 $trackingLinkFilterObj = new TrackingLinkListFilter()
-    ->from($from)
-    ->to($to)
+    ->from(new DateTimeImmutable('2024-01-04 00:00:00'))
+    ->to(new DateTimeImmutable('2025-01-04 00:00:00))
     ->skip(10)
     ->size(100)
     ->keyword('testKeyword')

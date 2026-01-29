@@ -24,7 +24,7 @@ use Gado\AirBridgePhpSdk\Dto\TrackingLink;
 
 $trackingLinkApi = new TrackingLinkApi('your_bearer_token');
 
-$trackingLink = new TrackingLink()
+$trackingLinkObj = new TrackingLink()
     ->androidFallbackPath('https://play.google.com')
     ->desktopFallbackPath('https://desktop.desktop.com')
     ->alertForInitialDeepLinkingIssue()
@@ -35,7 +35,7 @@ $trackingLink = new TrackingLink()
     ->useDefaultOgTag()
     ->build();
 
-$result = $trackingLinkApi->createTrackingLink($trackingLink);
+$result = $trackingLinkApi->createTrackingLink($trackingLinkObj);
 ```
 
 ### Update a tracking Link
